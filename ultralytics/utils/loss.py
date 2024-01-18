@@ -83,12 +83,12 @@ class BboxLoss(nn.Module):
         diou_loss = diou
         BCE_EXP = torch.exp(1 - iou)
         focal = alpha * BCE_EXP**gamma * torch.mean(diou_loss)
-        #print("check", torch.le(diou_loss, focal) )
+        print("check", torch.le(diou_loss, focal) )
         regression_loss = torch.where(
-                        torch.le(diou_loss, focal),
+                       torch.le(diou_loss, focal),
                         focal,
                         diou_loss
-                    )
+                   )
 
         loss_iou = ((1.0 - regression_loss) * weight).sum() / target_scores_sum
 
